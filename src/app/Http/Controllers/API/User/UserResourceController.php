@@ -3,10 +3,18 @@
 namespace App\Http\Controllers\API\User;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
+use Exception;
 use Illuminate\Http\Request;
 
 class UserResourceController extends Controller
 {
+    private $user;
+
+    public function __construct(User $user) {
+        $this->user = $user;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +22,15 @@ class UserResourceController extends Controller
      */
     public function index()
     {
-        //
+        try {
+            $items = $this->user->paginate(10);
+            return response()->json($items, 200);
+        } catch (Exception $e) {
+            return response()->json([
+                'status' => 'error',
+                'message' => $e->getMessage()
+            ], 500);
+        }
     }
 
     /**

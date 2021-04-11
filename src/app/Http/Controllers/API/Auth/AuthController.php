@@ -26,18 +26,20 @@ class AuthController extends Controller
             }
         } catch(Exception $e) {
             return response()->json([
-                'error' => $e->getMessage()
+                'status' => 'error',
+                'message' => $e->getMessage()
             ], 500);
         }
     }
 
-    public function user()
+    public function me()
     {
         try {
             return response()->json(Auth::guard('api')->user());
         } catch(Exception $e) {
             return response()->json([
-                'error' => $e->getMessage()
+                'status' => 'error',
+                'message' => $e->getMessage()
             ], 500);
         }
     }
@@ -51,12 +53,14 @@ class AuthController extends Controller
                     $token->revoke();
                 }
                 return response()->json([
+                    'status' => 'success',
                     'message' => 'Logout successfully'
                 ], 200);
             }
         } catch(Exception $e) {
             return response()->json([
-                'error' => $e->getMessage()
+                'status' => 'error',
+                'message' => $e->getMessage()
             ], 500);
         }
     }
