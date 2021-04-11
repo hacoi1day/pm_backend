@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\API\User;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\User\StoreUser;
 use App\Models\User;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class UserResourceController extends Controller
 {
@@ -49,9 +51,17 @@ class UserResourceController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreUser $request)
     {
-        //
+        try {
+            $item = $this->user->create($request->all());
+            return response()->json($item, 201);
+        } catch (Exception $e) {
+            return response()->json([
+                'status' => 'error',
+                'message' => $e->getMessage()
+            ], 500);
+        }
     }
 
     /**
@@ -62,7 +72,15 @@ class UserResourceController extends Controller
      */
     public function show($id)
     {
-        //
+        try {
+            $item = $this->user->find($id);
+            return response()->json($item, 200);
+        } catch (Exception $e) {
+            return response()->json([
+                'status' => 'error',
+                'message' => $e->getMessage()
+            ], 500);
+        }
     }
 
     /**
@@ -85,7 +103,16 @@ class UserResourceController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        try {
+            $item = $this->user->find($id);
+            $item->update($request->all());
+            return response()->json($item, 202);
+        } catch (Exception $e) {
+            return response()->json([
+                'status' => 'error',
+                'message' => $e->getMessage()
+            ], 500);
+        }
     }
 
     /**
@@ -96,6 +123,18 @@ class UserResourceController extends Controller
      */
     public function destroy($id)
     {
-        //
+        try {
+            $item = $this->user->find($id);
+            $item->delete();
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Delete successfully'
+            ], 200);
+        } catch (Exception $e) {
+            return response()->json([
+                'status' => 'error',
+                'message' => $e->getMessage()
+            ], 500);
+        }
     }
 }

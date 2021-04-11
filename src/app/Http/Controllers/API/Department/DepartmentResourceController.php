@@ -53,7 +53,7 @@ class DepartmentResourceController extends Controller
     {
         try {
             $item = $this->department->create($request->all());
-            return response()->json($item, 200);
+            return response()->json($item, 201);
         } catch(Exception $e) {
             return response()->json([
                 'status' => 'error',
@@ -72,7 +72,7 @@ class DepartmentResourceController extends Controller
     {
         try {
             $item = $this->department->find($id);
-            return response()->json($item, 200);
+            return response()->json($item, 202);
         } catch(Exception $e) {
             return response()->json([
                 'status' => 'error',
