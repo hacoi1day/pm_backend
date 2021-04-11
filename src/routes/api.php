@@ -1,7 +1,9 @@
 <?php
 
 use App\Http\Controllers\API\Auth\AuthController;
+use App\Http\Controllers\API\Checkin\CheckinResourceController;
 use App\Http\Controllers\API\Department\DepartmentResourceController;
+use App\Http\Controllers\API\Request\RequestResourceController;
 use App\Http\Controllers\API\User\UserResourceController;
 
 use Illuminate\Support\Facades\Route;
@@ -36,5 +38,14 @@ Route::middleware('auth:api')->group(function () {
         Route::resource('department', DepartmentResourceController::class);
     });
 
+    // Checkin
+    Route::prefix('checkin')->group(function () {
+        Route::resource('checkin', CheckinResourceController::class);
+    });
+
+    // Request
+    Route::prefix('request')->group(function () {
+        Route::resource('request', RequestResourceController::class);
+    });
 
 });
