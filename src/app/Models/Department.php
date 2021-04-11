@@ -16,4 +16,9 @@ class Department extends Model
         'description',
         'manager_id'
     ];
+
+    public function manager()
+    {
+        return $this->belongsTo(User::class, 'manager_id', 'id');
+    }
 }
