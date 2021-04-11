@@ -1,20 +1,19 @@
 <?php
 
-namespace App\Http\Controllers\API\User;
+namespace App\Http\Controllers\API\Checkin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\User\StoreUser;
-use App\Models\User;
+use App\Http\Requests\Checkin\StoreCheckin;
+use App\Http\Requests\Checkin\UpdateCheckin;
+use App\Models\Checkin;
 use Exception;
-use Illuminate\Http\Request;
-use Illuminate\Support\Str;
 
-class UserResourceController extends Controller
+class CheckinResourceController extends Controller
 {
-    private $user;
+    private $checkin;
 
-    public function __construct(User $user) {
-        $this->user = $user;
+    public function __construct(Checkin $checkin) {
+        $this->checkin = $checkin;
     }
 
     /**
@@ -25,9 +24,9 @@ class UserResourceController extends Controller
     public function index()
     {
         try {
-            $items = $this->user->paginate(10);
+            $items = $this->checkin->latest()->paginate(10);
             return response()->json($items, 200);
-        } catch (Exception $e) {
+        } catch(Exception $e) {
             return response()->json([
                 'status' => 'error',
                 'message' => $e->getMessage()
@@ -51,12 +50,12 @@ class UserResourceController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreUser $request)
+    public function store(StoreCheckin $request)
     {
         try {
-            $item = $this->user->create($request->all());
+            $item = $this->checkin->create($request->all());
             return response()->json($item, 201);
-        } catch (Exception $e) {
+        } catch(Exception $e) {
             return response()->json([
                 'status' => 'error',
                 'message' => $e->getMessage()
@@ -73,9 +72,9 @@ class UserResourceController extends Controller
     public function show($id)
     {
         try {
-            $item = $this->user->find($id);
+            $item = $this->checkin->find($id);
             return response()->json($item, 200);
-        } catch (Exception $e) {
+        } catch(Exception $e) {
             return response()->json([
                 'status' => 'error',
                 'message' => $e->getMessage()
@@ -101,13 +100,13 @@ class UserResourceController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateCheckin $request, $id)
     {
         try {
-            $item = $this->user->find($id);
+            $item = $this->checkin->find($id);
             $item->update($request->all());
             return response()->json($item, 202);
-        } catch (Exception $e) {
+        } catch(Exception $e) {
             return response()->json([
                 'status' => 'error',
                 'message' => $e->getMessage()
@@ -124,13 +123,13 @@ class UserResourceController extends Controller
     public function destroy($id)
     {
         try {
-            $item = $this->user->find($id);
+            $item = $this->checkin->find($id);
             $item->delete();
             return response()->json([
                 'status' => 'success',
                 'message' => 'Delete successfully'
             ], 200);
-        } catch (Exception $e) {
+        } catch(Exception $e) {
             return response()->json([
                 'status' => 'error',
                 'message' => $e->getMessage()

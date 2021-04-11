@@ -1,22 +1,20 @@
 <?php
 
-namespace App\Http\Controllers\API\User;
+namespace App\Http\Controllers\API\Department;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\User\StoreUser;
-use App\Models\User;
+use App\Http\Requests\Department\StoreDepartment;
+use App\Http\Requests\Department\UpdateDepartment;
+use App\Models\Department;
 use Exception;
-use Illuminate\Http\Request;
-use Illuminate\Support\Str;
 
-class UserResourceController extends Controller
+class DepartmentResourceController extends Controller
 {
-    private $user;
+    private $department;
 
-    public function __construct(User $user) {
-        $this->user = $user;
+    public function __construct(Department $department) {
+        $this->department = $department;
     }
-
     /**
      * Display a listing of the resource.
      *
@@ -25,9 +23,9 @@ class UserResourceController extends Controller
     public function index()
     {
         try {
-            $items = $this->user->paginate(10);
+            $items = $this->department->paginate(10);
             return response()->json($items, 200);
-        } catch (Exception $e) {
+        } catch(Exception $e) {
             return response()->json([
                 'status' => 'error',
                 'message' => $e->getMessage()
@@ -51,12 +49,12 @@ class UserResourceController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreUser $request)
+    public function store(StoreDepartment $request)
     {
         try {
-            $item = $this->user->create($request->all());
+            $item = $this->department->create($request->all());
             return response()->json($item, 201);
-        } catch (Exception $e) {
+        } catch(Exception $e) {
             return response()->json([
                 'status' => 'error',
                 'message' => $e->getMessage()
@@ -73,9 +71,9 @@ class UserResourceController extends Controller
     public function show($id)
     {
         try {
-            $item = $this->user->find($id);
-            return response()->json($item, 200);
-        } catch (Exception $e) {
+            $item = $this->department->find($id);
+            return response()->json($item, 202);
+        } catch(Exception $e) {
             return response()->json([
                 'status' => 'error',
                 'message' => $e->getMessage()
@@ -101,13 +99,13 @@ class UserResourceController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateDepartment $request, $id)
     {
         try {
-            $item = $this->user->find($id);
+            $item = $this->department->find($id);
             $item->update($request->all());
-            return response()->json($item, 202);
-        } catch (Exception $e) {
+            return response()->json($item, 200);
+        } catch(Exception $e) {
             return response()->json([
                 'status' => 'error',
                 'message' => $e->getMessage()
@@ -124,13 +122,13 @@ class UserResourceController extends Controller
     public function destroy($id)
     {
         try {
-            $item = $this->user->find($id);
+            $item = $this->department->find($id);
             $item->delete();
             return response()->json([
                 'status' => 'success',
                 'message' => 'Delete successfully'
             ], 200);
-        } catch (Exception $e) {
+        } catch(Exception $e) {
             return response()->json([
                 'status' => 'error',
                 'message' => $e->getMessage()
