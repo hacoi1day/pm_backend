@@ -31,7 +31,6 @@ Route::middleware('auth:api')->group(function () {
 
     // Storage
     Route::prefix('storage')->group(function () {
-        Route::get('get', [StorageController::class, 'getFile']);
         Route::post('store-file', [StorageController::class, 'storeFile']);
     });
 
