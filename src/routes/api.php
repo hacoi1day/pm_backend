@@ -4,6 +4,7 @@ use App\Http\Controllers\API\Auth\AuthController;
 use App\Http\Controllers\API\Checkin\CheckinResourceController;
 use App\Http\Controllers\API\Department\DepartmentResourceController;
 use App\Http\Controllers\API\Request\RequestResourceController;
+use App\Http\Controllers\API\Storage\StorageController;
 use App\Http\Controllers\API\User\UserResourceController;
 
 use Illuminate\Support\Facades\Route;
@@ -27,6 +28,12 @@ Route::middleware('auth:api')->group(function () {
     Route::get('me', [AuthController::class, 'me']);
     // Logout
     Route::get('logout', [AuthController::class, 'logout']);
+
+    // Storage
+    Route::prefix('storage')->group(function () {
+        Route::get('get', [StorageController::class, 'getFile']);
+        Route::post('store-file', [StorageController::class, 'storeFile']);
+    });
 
     // User
     Route::prefix('user')->group(function () {
