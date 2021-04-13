@@ -16,7 +16,7 @@ class StorageController extends Controller
         Storage::disk('public')->put($fileName, file_get_contents($file));
 
         return response()->json([
-            'url' => 'storage/'.$fileName
+            'url' => env('APP_URL').'storage/'.$fileName
         ], 200);
     }
 }
