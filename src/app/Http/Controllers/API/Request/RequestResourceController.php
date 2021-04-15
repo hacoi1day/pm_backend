@@ -7,6 +7,7 @@ use App\Http\Requests\Request\StoreRequest;
 use App\Http\Requests\Request\UpdateRequest;
 use App\Models\Request;
 use Exception;
+use Illuminate\Support\Facades\Auth;
 
 class RequestResourceController extends Controller
 {
@@ -52,7 +53,9 @@ class RequestResourceController extends Controller
     public function store(StoreRequest $request)
     {
         try {
-            $item = $this->request->create($request->all());
+            $params = $request->all();
+            $params['user_id'] = Auth::guard('api')->id();
+            $item = $this->request->create($params);
             return response()->json($item, 201);
         } catch(Exception $e) {
             return response()->json([
