@@ -43,6 +43,7 @@ Route::middleware('auth:api')->group(function () {
     // Department
     Route::prefix('department')->group(function () {
         Route::resource('department', DepartmentResourceController::class);
+        Route::post('dropdown', [DepartmentResourceController::class, 'dropdown']);
     });
 
     // Checkin
