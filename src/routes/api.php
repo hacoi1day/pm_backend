@@ -37,6 +37,7 @@ Route::middleware('auth:api')->group(function () {
     // User
     Route::prefix('user')->group(function () {
         Route::resource('user', UserResourceController::class);
+        Route::post('dropdown', [UserResourceController::class, 'dropdown']);
     });
 
     // Department

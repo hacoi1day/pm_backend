@@ -137,4 +137,24 @@ class UserResourceController extends Controller
             ], 500);
         }
     }
+
+    public function dropdown()
+    {
+        try {
+            $items = $this->user->all();
+            $result = [];
+            foreach ($items as $item) {
+                array_push($result, [
+                    'id' => $item->id,
+                    'name' => $item->name,
+                ]);
+            }
+            return response()->json($result, 200);
+        } catch (Exception $e) {
+            return response()->json([
+                'status' => 'error',
+                'message' => $e->getMessage()
+            ], 500);
+        }
+    }
 }
