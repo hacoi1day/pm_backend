@@ -1,7 +1,8 @@
 version: '3'
 
 networks:
-    app-network: null
+    app-network:
+        name: app-network
 
 services: 
     nginx:
