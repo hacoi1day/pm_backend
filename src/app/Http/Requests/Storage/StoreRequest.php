@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\Request;
+namespace App\Http\Requests\Storage;
 
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -24,9 +24,7 @@ class StoreRequest extends FormRequest
     public function rules()
     {
         return [
-            'type' => 'required',
-            'start' => 'required',
-            'end' => 'required',
+            'file' => 'required|file'
         ];
     }
 }

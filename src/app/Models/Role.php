@@ -5,20 +5,15 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Department extends Model
+class Role extends Model
 {
     use HasFactory;
 
-    protected $table = 'departments';
+    protected $table = 'roles';
 
     protected $fillable = [
         'name',
         'description',
-        'manager_id'
+        'permissions'
     ];
-
-    public function manager()
-    {
-        return $this->belongsTo(User::class, 'manager_id', 'id');
-    }
 }
